@@ -1,4 +1,5 @@
 import { UserPlus, FileEdit, Users, LineChart } from "lucide-react";
+import React from "react";
 
 export const howItWorks = [
   {
