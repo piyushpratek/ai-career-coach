@@ -1,8 +1,9 @@
 import React from 'react'
 
 const OnboardingPage = () => {
+    //Check if user is already onboarded
     return (
-        <div>OnboardingPage</div>
+        <main>OnboardingPage</main>
     )
 }
 
