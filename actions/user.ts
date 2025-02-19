@@ -72,7 +72,7 @@ export async function updateUser(data: UserData) {
     );
 
     //   revalidatePath("/");
-    return result.user;
+    return result.updatedUser;
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error updating user and industry:", error.message);
