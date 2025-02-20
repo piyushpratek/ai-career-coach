@@ -74,15 +74,25 @@ const Header = async () => {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SignedIn>
-                </div>
 
+                    <SignedOut>
+                        <SignInButton />
+                        <Button variant="outline">Sign In</Button>
+                    </SignedOut>
+                    <SignedIn>
+                        <UserButton
+                            appearance={{
+                                elements: {
+                                    avatarBox: "w-10 h-10",
+                                    userButtonPopoverCard: "shadow-xl",
+                                    userPreviewMainIdentifier: "font-semibold",
+                                },
+                            }}
+                            afterSignOutUrl="/"
+                        />
+                    </SignedIn>
+                </div>
             </nav>
-            <SignedOut>
-                <SignInButton />
-            </SignedOut>
-            <SignedIn>
-                <UserButton />
-            </SignedIn>
         </header>
     )
 }
