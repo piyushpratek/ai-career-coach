@@ -82,7 +82,7 @@ const OnboardingForm = ({ industries }: OnboardingFormProps) => {
       // router.reload();
       window.location.reload();
     }
-  }, [updateResult, updateLoading]);
+  }, [updateResult, updateLoading, router]);
 
   const watchIndustry = watch("industry");
 

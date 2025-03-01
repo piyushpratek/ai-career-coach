@@ -29,7 +29,7 @@ const Header = async () => {
                 {/* Action Buttons */}
                 <div className="flex items-center space-x-2 md:space-x-4">
                     <SignedIn>
-                        <Link href={"/dashboard"}>
+                        <Link href="/dashboard">
                             <Button variant="outline"
                                 className="hidden md:inline-flex items-center gap-2">
                                 <LayoutDashboard className=' h-4 w-4' />
@@ -77,8 +77,9 @@ const Header = async () => {
 
                     <SignedOut>
                         <SignInButton />
-                        <Button variant="outline">Sign In</Button>
+                        {/* <Button variant="outline">Sign In --</Button> */}
                     </SignedOut>
+
                     <SignedIn>
                         <UserButton
                             appearance={{
