@@ -84,10 +84,8 @@ export async function updateUser(data: UserData) {
 }
 
 export async function getUserOnboardingStatus() {
-  console.log("Starting getUserOnboardingStatus");
 
   const { userId } = await auth();
-  console.log("Auth completed, userId:", userId);
 
   // if (!userId) throw new Error("Unauthorized");
   if (!userId) {
@@ -109,15 +107,6 @@ export async function getUserOnboardingStatus() {
         industry: true,
       },
     });
-    console.log("User fetched:", user);
-
-    if (!user) {
-      console.error("User not found for userId:", userId);
-      throw new Error("User not found");
-    }
-
-    const isOnboarded = !!user.industry;
-    console.log("User onboarding status:", isOnboarded);
 
     return {
       isOnboarded: !!user?.industry,
