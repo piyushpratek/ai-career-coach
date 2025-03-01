@@ -5,7 +5,7 @@ import { db } from "@/lib/prisma";
 
 interface UserData {
   industry: string;
-  experience: number; // or string, depending on your use case
+  experience: number;
   bio: string;
   skills: string[]; // assuming skills is an array of strings
 }
@@ -35,7 +35,7 @@ export async function updateUser(data: UserData) {
         if (!industryInsight) {
           // const insights = await generateAIInsights(data.industry);
 
-          industryInsight = await db.industryInsight.create({
+          industryInsight = await tx.industryInsight.create({
             data: {
               industry: data.industry,
               salaryRanges: [],
@@ -72,7 +72,7 @@ export async function updateUser(data: UserData) {
     );
 
     //   revalidatePath("/");
-    return result.updatedUser;
+    return { success: true, updatedUser: result.updatedUser };
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error updating user and industry:", error.message);
@@ -84,9 +84,16 @@ export async function updateUser(data: UserData) {
 }
 
 export async function getUserOnboardingStatus() {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
+  console.log("Starting getUserOnboardingStatus");
 
+  const { userId } = await auth();
+  console.log("Auth completed, userId:", userId);
+
+  // if (!userId) throw new Error("Unauthorized");
+  if (!userId) {
+    console.error("Unauthorized: No userId found");
+    throw new Error("Unauthorized");
+  }
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
@@ -102,10 +109,20 @@ export async function getUserOnboardingStatus() {
         industry: true,
       },
     });
+    console.log("User fetched:", user);
+
+    if (!user) {
+      console.error("User not found for userId:", userId);
+      throw new Error("User not found");
+    }
+
+    const isOnboarded = !!user.industry;
+    console.log("User onboarding status:", isOnboarded);
 
     return {
       isOnboarded: !!user?.industry,
     };
+
   } catch (error) {
     console.error("Error checking onboarding status:", error);
     throw new Error("Failed to check onboarding status");

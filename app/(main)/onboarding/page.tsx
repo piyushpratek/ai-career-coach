@@ -5,7 +5,7 @@ import OnboardingForm from "./_components/onboarding-form";
 import { industries } from '@/data/industries';
 
 const OnboardingPage = async () => {
-    //Check if user is already onboarded
+    // Check if user is already onboarded
     const { isOnboarded } = await getUserOnboardingStatus()
 
     if (isOnboarded) {
