@@ -2,7 +2,8 @@ import { Inngest } from "inngest";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({
-    id: "ai-career-coach", name: "ai-career-coach", credentials: {
+    name: "AI Career Coach",
+    id: "ai-career-coach", credentials: {
         gemini: {
             apiKey: process.env.GEMINI_API_KEY,
         },

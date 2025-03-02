@@ -23,9 +23,9 @@ export const generateIndustryInsights = inngest.createFunction(
               { "role": "string", "min": number, "max": number, "median": number, "location": "string" }
             ],
             "growthRate": number,
-            "demandLevel": "High" | "Medium" | "Low",
+            "demandLevel": "HIGH" | "MEDIUM" | "LOW",
             "topSkills": ["skill1", "skill2"],
-            "marketOutlook": "Positive" | "Neutral" | "Negative",
+            "marketOutlook": "POSITIVE" | "NEUTRAL" | "NEGATIVE",
             "keyTrends": ["trend1", "trend2"],
             "recommendedSkills": ["skill1", "skill2"]
           }
@@ -48,11 +48,19 @@ export const generateIndustryInsights = inngest.createFunction(
                 throw new Error("No candidates found in the response from Gemini API");
             }
 
-            const parts = res.response.candidates[0].content.parts;
-            const firstPart = parts?.[0];
+            const candidate = res.response.candidates[0];
+            let text = "";
 
-            // const text = res.response.candidates[0].content.parts?.[0]?.text ?? "";
-            const text = typeof firstPart === "object" && "text" in firstPart ? firstPart.text : "";
+            if (candidate && candidate.content && Array.isArray(candidate.content.parts) && candidate.content.parts.length > 0) {
+                const part = candidate.content.parts[0];
+                if ('text' in part) {
+                    text = part.text;
+                } else {
+                    throw new Error("Text property not found in the response part");
+                }
+            } else {
+                throw new Error("Unexpected response structure from Gemini API");
+            }
 
             const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
 
