@@ -14,7 +14,6 @@ const InterviewPage = async () => {
                 </h1>
             </div>
             <div className="space-y-6">
-                {/* <StatsCards assessments={assessments} /> */}
                 <StatsCards
                     assessments={assessments.map((assessment) => ({
                         ...assessment,
@@ -29,12 +28,12 @@ const InterviewPage = async () => {
                         })),
                     }))}
                 />
-                {/* <PerformanceChart assessments={assessments} /> */}
+
                 <PerformanceChart
                     assessments={assessments.map((assessment) => ({
                         ...assessment,
-                        createdAt: assessment.createdAt.toISOString(), // Convert Date to string if necessary
-                        updatedAt: assessment.updatedAt.toISOString(), // Convert Date to string if necessary
+                        createdAt: assessment.createdAt.toISOString(),
+                        updatedAt: assessment.updatedAt.toISOString(),
                         questions: (assessment.questions as QuestionType[]).map((q) => ({
                             question: q?.question || "",
                             userAnswer: q?.userAnswer || "",
@@ -45,7 +44,6 @@ const InterviewPage = async () => {
                     }))}
                 />
 
-                {/* <QuizList assessments={assessments} /> */}
                 <QuizList
                     assessments={assessments.map((assessment) => ({
                         ...assessment,
