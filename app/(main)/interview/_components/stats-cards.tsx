@@ -14,10 +14,8 @@ export type AssessmentType = {
   userId: string;
   category: string;
   improvementTip: string | null;
-
   quizScore: number;
   questions: QuestionType[];
-  // createdAt: string; // or Date if stored as Date
   createdAt: string | Date; // Allow both string and Date
   updatedAt: string | Date; // Allow both string and Date
 };
