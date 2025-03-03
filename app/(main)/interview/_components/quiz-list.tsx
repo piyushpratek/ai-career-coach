@@ -77,6 +77,7 @@ export default function QuizList({ assessments, }: { assessments: AssessmentType
         </CardContent>
       </Card>
 
+      {/* dialog */}
       <Dialog open={!!selectedQuiz} onOpenChange={() => setSelectedQuiz(null)}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
