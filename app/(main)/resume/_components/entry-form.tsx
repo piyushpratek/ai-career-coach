@@ -61,7 +61,6 @@ export function EntryForm({ type, entries, onChange }: EntryFormProps) {
     const formattedEntry = {
       ...data,
       startDate: formatDisplayDate(data.startDate),
-      // endDate: data.current ? "" : formatDisplayDate(data.endDate),
       endDate: data.current ? "" : (data.endDate ? formatDisplayDate(data.endDate) : ""),
     };
 
