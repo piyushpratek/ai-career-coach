@@ -10,7 +10,7 @@ interface Params {
 }
 
 const EditCoverLetterPage = async ({ params }: { params: Params }) => {
-    const id = await params.id
+    const id = params.id
     const coverLetter = await getCoverLetter(id);
 
     return (
