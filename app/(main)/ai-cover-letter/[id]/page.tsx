@@ -1,3 +1,4 @@
+
 import { getCoverLetter } from '@/actions/cover-letter';
 import React from 'react'
 import Link from "next/link";
@@ -13,7 +14,7 @@ interface PageProps {
 
 const EditCoverLetterPage = async ({ params }: PageProps) => {
     // const { id } = params
-    const resolvedParams = params; // Ensure it's awaited
+    const resolvedParams = await params; // Ensure it's awaited
     console.log("Params Type:", typeof params, params);
 
     // console.log("Params:", resolvedParams);
