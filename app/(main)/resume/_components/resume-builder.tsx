@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -69,25 +69,7 @@ export default function ResumeBuilder({ initialContent = "" }: ResumeBuilderProp
     if (initialContent) setActiveTab("preview");
   }, [initialContent]);
 
-  // Update preview content when form values change
-  useEffect(() => {
-    if (activeTab === "edit") {
-      const newContent = getCombinedContent();
-      setPreviewContent(newContent ? newContent : initialContent);
-    }
-  }, [formValues, activeTab]);
-
-  // Handle save result
-  useEffect(() => {
-    if (saveResult && !isSaving) {
-      toast.success("Resume saved successfully!");
-    }
-    if (saveError) {
-      toast.error(saveError.message || "Failed to save resume");
-    }
-  }, [saveResult, saveError, isSaving]);
-
-  const getContactMarkdown = () => {
+  const getContactMarkdown = useCallback(() => {
     const { contactInfo } = formValues;
     const parts = [];
     if (contactInfo.email) parts.push(`📧 ${contactInfo.email}`);
@@ -100,9 +82,9 @@ export default function ResumeBuilder({ initialContent = "" }: ResumeBuilderProp
       ? `## <div align="center">${user?.fullName}</div>
         \n\n<div align="center">\n\n${parts.join(" | ")}\n\n</div>`
       : "";
-  };
+  }, [formValues, user]);
 
-  const getCombinedContent = () => {
+  const getCombinedContent = useCallback(() => {
     const { summary, skills, experience, education, projects } = formValues;
     return [
       getContactMarkdown(),
@@ -114,7 +96,25 @@ export default function ResumeBuilder({ initialContent = "" }: ResumeBuilderProp
     ]
       .filter(Boolean)
       .join("\n\n");
-  };
+  }, [formValues, getContactMarkdown]);
+
+  // Update preview content when form values change
+  useEffect(() => {
+    if (activeTab === "edit") {
+      const newContent = getCombinedContent();
+      setPreviewContent(newContent ? newContent : initialContent);
+    }
+  }, [formValues, activeTab, getCombinedContent, initialContent]);
+
+  // Handle save result
+  useEffect(() => {
+    if (saveResult && !isSaving) {
+      toast.success("Resume saved successfully!");
+    }
+    if (saveError) {
+      toast.error(saveError.message || "Failed to save resume");
+    }
+  }, [saveResult, saveError, isSaving]);
 
   const [isGenerating, setIsGenerating] = useState(false);
 
