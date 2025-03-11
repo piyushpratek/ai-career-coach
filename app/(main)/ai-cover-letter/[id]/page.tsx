@@ -16,10 +16,12 @@ interface PageProps {
 }
 
 const EditCoverLetterPage = async ({ params }: PageProps) => {
-    const { id } = params
-    console.log("Params:", params);
+    // const { id } = params
+    const resolvedParams = await params; // Ensure it's awaited
 
-    const coverLetter = await getCoverLetter(id);
+    // console.log("Params:", resolvedParams);
+
+    const coverLetter = await getCoverLetter(resolvedParams.id);
 
     return (
         <div className="container mx-auto py-6">
