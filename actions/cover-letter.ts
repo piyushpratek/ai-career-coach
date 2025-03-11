@@ -7,7 +7,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-export async function generateCoverLetter(data) {
+interface CoverLetterInput {
+  jobTitle: string;
+  companyName: string;
+  jobDescription: string;
+}
+
+export async function generateCoverLetter(data: CoverLetterInput) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
@@ -59,7 +65,11 @@ export async function generateCoverLetter(data) {
 
     return coverLetter;
   } catch (error) {
-    console.error("Error generating cover letter:", error.message);
+    if (error instanceof Error) {
+      console.error("Error generating cover letter:", error.message);
+    } else {
+      console.error("Unknown error generating cover letter:", error);
+    }
     throw new Error("Failed to generate cover letter");
   }
 }
@@ -84,7 +94,7 @@ export async function getCoverLetters() {
   });
 }
 
-export async function getCoverLetter(id) {
+export async function getCoverLetter(id: string) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
@@ -102,7 +112,7 @@ export async function getCoverLetter(id) {
   });
 }
 
-export async function deleteCoverLetter(id) {
+export async function deleteCoverLetter(id: string) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
