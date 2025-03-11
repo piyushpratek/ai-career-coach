@@ -5,12 +5,20 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import CoverLetterPreview from '../_components/cover-letter-preview';
 
-type Params = {
-    id: string; // or number, depending on your use case
+// type Params = {
+//     id: string; // or number, depending on your use case
+// }
+
+interface PageProps {
+    params: {
+        id: string;
+    };
 }
 
-const EditCoverLetterPage = async ({ params }: { params: Params }) => {
+const EditCoverLetterPage = async ({ params }: PageProps) => {
     const { id } = params
+    console.log("Params:", params);
+
     const coverLetter = await getCoverLetter(id);
 
     return (
